@@ -1,0 +1,17 @@
+<header>
+    <h1>Carrito</h1>
+</header>
+
+<main>
+
+    <section>
+        <h3>Detalles del Carrito</h3>
+        <div id="cart-details">El carrito está vacío.</div>
+        <button onclick="window.history.back()">Volver</button>
+    </section>
+
+    <p class="error-message" id="error-message"></p>
+</main>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/api/public/js/carts.socket.js"></script>

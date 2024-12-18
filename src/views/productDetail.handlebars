@@ -1,0 +1,11 @@
+<header>
+        <h1>{{product.title}}</h1>
+</header>
+<main>
+    <p><strong>Precio:</strong> ${{product.price}}</p>
+    <p><strong>Descripción:</strong> {{product.description}}</p>
+    <p>Código: {{product.code}}</p>
+    <img src="/public/images/{{product.thumbnail}}" alt="Imagen del producto">
+    {{!-- <img src="${product.thumbnail}" alt=""> --}}
+    <button onclick="window.history.back()">Volver</button>
+</main>
