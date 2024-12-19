@@ -64,7 +64,7 @@ export default class ProductManager {
             const product = await this.#productModel.create({
                 ...data,
                 status: convertToBoolean(data.status),
-                thumbnail: filename ?? null,
+                thumbnail: filename ?? "image-not-found.jpg",
             });
 
             return product;

@@ -115,6 +115,20 @@ export default class CartManager {
 
     }
 
+    async deleteAllProductsByProductId(id, productId) {
+        try {
+            const cart = await this.#findOneById(id);
+
+            cart.products = cart.products.filter((item) => item.product._id.toString() !== productId);
+
+            await cart.save();
+
+            return cart;
+        } catch (error) {
+            throw new ErrorManager(error.message, error.code);
+        }
+    }
+
     async removeAllProductsById(id) {
         try {
             const cart = await this.#findOneById(id);

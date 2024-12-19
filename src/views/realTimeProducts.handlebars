@@ -31,9 +31,8 @@
     </section>
 
     <section>
-        <h2>Carrito</h2>
-        <div id="cart-details">El carrito está vacío.</div>
         <button onclick="window.location.href='/cart/6763074e2797b2827b49548a'">Ir al carrito</button>
+        <button id="btn-delete-cart" data-cart-id="{{cart._id}}">Vaciar Carrito</button>
     </section>
 
     <section>
@@ -50,7 +49,7 @@
                 <input type="number" name="stock" placeholder="Stock">
             </div>
             <div>Activo <input type="checkbox" name="status"></div>
-            <input type="file" name="thumbnail" placeholder="Imagen">
+            <input type="file" name="file" placeholder="Imagen">
 
             <input type="submit" value="Guardar">
         </form>

@@ -1,6 +1,9 @@
 import { Server } from "socket.io";
 import ProductManager from "../managers/ProductManager.js";
 import CartManager from "../managers/CartManager.js";
+import { generateNameForFile } from "../utils/random.js";
+import { writeJsonFile } from "../utils/fileHandler.js";
+import paths from "../utils/paths.js";
 
 const productManager = new ProductManager();
 const cartManager= new CartManager();
@@ -22,14 +25,15 @@ export const config = (httpServer) => {
 
         const emitPaginatedProducts = async (page = 1, sort = "asc") => {
             const products = await productManager.getAll({ page, sort });
-            socketServer.emit("products-list", products);
+            console.log("Enviando productos con cartId:", cartId);
+            socketServer.emit("products-list", { ...products, cartId });
         };
 
         await emitPaginatedProducts();
 
         socket.on("change-sort", async (data) => {
             const { sort } = data;
-            await emitPaginatedProducts(1, sort); // Resetea a la página 1 al cambiar el orden
+            await emitPaginatedProducts(1, sort);
         });
 
         socket.on("change-page", async (data) => {
@@ -39,7 +43,17 @@ export const config = (httpServer) => {
 
         socket.on("insert-product", async (data) => {
             try {
-                await productManager.insertOne(data);
+                if (data.file.name) {
+                    const filename = generateNameForFile(data.file.name);
+                    await writeJsonFile(paths.images, filename, data.file.buffer);
+                    console.log(filename);
+
+                    await productManager.insertOne(data, filename);
+                }
+
+                if (!data.file.name) {
+                    await productManager.insertOne(data);
+                }
 
                 await emitPaginatedProducts();
             } catch (error) {
@@ -56,6 +70,8 @@ export const config = (httpServer) => {
                 socketServer.emit("error-message", { message: error.message });
             }
         });
+
+        //CARRITO
 
         socket.on("add-product", async ({ productId }) => {
             try {
@@ -84,6 +100,15 @@ export const config = (httpServer) => {
                 socket.emit("cart-updated", { cart: updatedCart });
 
                 socket.emit("success-message", { message: "Producto eliminado del carrito" });
+            } catch (error) {
+                socket.emit("error-message", { message: error.message });
+            }
+        });
+
+        socket.on("delete-all-products", async ({ cartId, productId }) => {
+            try {
+                const updatedCart = await cartManager.deleteAllProductsByProductId(cartId, productId);
+                socket.emit("cart-updated", { cart: updatedCart });
             } catch (error) {
                 socket.emit("error-message", { message: error.message });
             }
