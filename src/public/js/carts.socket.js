@@ -52,7 +52,6 @@ btnDeleteCart.onclick = (event)=>{
 document.body.addEventListener("click", (event) => {
     const target = event.target;
 
-    // Botón para agregar productos desde el carrito
     if (target.matches(".add-to-cart")) {
         const productId = target.dataset.productId;
         if (productId) {
@@ -60,7 +59,6 @@ document.body.addEventListener("click", (event) => {
         }
     }
 
-    // Botón para quitar productos desde el carrito
     if (target.matches(".remove-from-cart")) {
         const productId = target.dataset.productId;
         if (productId) {
@@ -70,8 +68,6 @@ document.body.addEventListener("click", (event) => {
 
     if (target.matches(".delete-all-from-cart")) {
         const productId = target.dataset.productId;
-        console.log(productId);
-        console.log(cartId);
         if (productId && cartId) {
             socket.emit("delete-all-products", { cartId, productId });
         }

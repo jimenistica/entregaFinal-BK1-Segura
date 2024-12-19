@@ -25,7 +25,6 @@ export const config = (httpServer) => {
 
         const emitPaginatedProducts = async (page = 1, sort = "asc") => {
             const products = await productManager.getAll({ page, sort });
-            console.log("Enviando productos con cartId:", cartId);
             socketServer.emit("products-list", { ...products, cartId });
         };
 
@@ -70,8 +69,6 @@ export const config = (httpServer) => {
                 socketServer.emit("error-message", { message: error.message });
             }
         });
-
-        //CARRITO
 
         socket.on("add-product", async ({ productId }) => {
             try {

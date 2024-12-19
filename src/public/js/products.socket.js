@@ -27,7 +27,7 @@ socket.on("products-list", (data) => {
         <td>  ${product.title} </td>
         <td> $${product.price} </td>
         <td>
-            <button onclick="window.location.href='/product/${product.id}'">Info</button>
+            <button class="btn-reset btn-info" onclick="window.location.href='/product/${product.id}'"><span class="material-icons">info</span></button>
             <button class="add-to-cart" data-product-id="${product.id}">+</button>
             <button class="remove-from-cart" data-product-id="${product.id}">-</button>
         </td>
@@ -35,8 +35,8 @@ socket.on("products-list", (data) => {
         `;
     });
     const paginationInfo = document.getElementById("pagination-info");
-    paginationInfo.dataset.totalPages = totalPages; // Actualiza totalPages dinámicamente
-    paginationInfo.innerText = `Página ${currentPage} de ${totalPages}`;
+    paginationInfo.dataset.totalPages = totalPages;
+    paginationInfo.innerText = `${currentPage} de ${totalPages}`;
 });
 
 document.getElementById("prev-page").addEventListener("click", () => {

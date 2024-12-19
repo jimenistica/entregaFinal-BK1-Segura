@@ -23,14 +23,15 @@
                 <tbody id="products-list"></tbody>
             </table>
         </div>
-        <div>
-            <button id="prev-page">Anterior</button>
-            <span id="pagination-info"></span>
-            <button id="next-page">Siguiente</button>
+        <div class="pages-div">
+            <button id="prev-page" class="btn-reset"><span class="material-icons">chevron_left</span></button>
+            <span class="pagination" id="pagination-info"></span>
+            <button id="next-page" class="btn-reset"><span class="material-icons">chevron_right</span></button>
         </div>
     </section>
 
     <section>
+        <h3>Carrito</h3>
         <button onclick="window.location.href='/cart/6763074e2797b2827b49548a'">Ir al carrito</button>
         <button id="btn-delete-cart" data-cart-id="{{cart._id}}">Vaciar Carrito</button>
     </section>
@@ -56,9 +57,9 @@
     </section>
 
     <section>
-        <h3>Eliminar de Productos</h3>
+        <h3>Eliminar Productos</h3>
         <div class="products__delete">
-            <input type="text" class="products__delete__input" id="input-product-id" placeholder="ID del Producte">
+            <input type="text" class="products__delete__input" id="input-product-id" placeholder="ID del Product0">
             <button id="btn-delete-product">Eliminar</button>
         </div>
     </section>
